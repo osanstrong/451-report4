@@ -8,7 +8,7 @@
 \itshape TA: Shaffer Bauer \\
 \itshape TA: Justin Jia \\
 }
-\date{February 28, 2026}
+\date{March 5, 2026 (Adjusted from February 28)}
 
 \usepackage[
     style=ieee
@@ -16,10 +16,17 @@
 \bibliography{refs.bib}
 
 \usepackage[letterpaper, margin=1in]{geometry}
+\usepackage{xspace}
 \newcommand{\figwidth}{0.75\linewidth}
 
 % Common Macros
+\newcommand{\figref}[1]{Fig.~\ref{#1}}
+
+% Specific lab to lab
 \newcommand{\micCi}{~$\mathrm{\mu Ci}$~}
+\newcommand{\AmSrc}{\xspace$^{241}$Am\xspace}
+\newcommand{\PoSrc}{\xspace$^{210}$Po\xspace}
+
 
 \usepackage{placeins} % FloatBarrier
 \usepackage{amsmath} % align
@@ -39,13 +46,102 @@
 
 \section{Introduction and Background}
 A key metric of interest for radiation in matter is range, that is, the depth along the initial direction which a particle is expected, on average, to penetrate through a material.
-For a given type of particle, this range is further highly dependent on an incident particle's energy
+For a given type of particle, this range is further highly dependent on an incident particle's energy and the electron/neutron densities of the medium.\cite{npre_lab_4_manual_2025}
+This laboratory investigates the range of alpha particles, as emitted by \AmSrc and \PoSrc, through aluminum metal, Mylar\footnote{While material names are usually kept in lowercase, ``Mylar'' is a brand name, and remains accordingly capitalized in this report.} plastic, and air.
+More broadly, the energy loss phenomena of alpha particles through different materials, including energy straggling, and the effects of geometric attenuation corresponding to solid angle, are also investigated.
+\subsection{Charged Particle Energy Loss}
+
 
 \section{Experimental Procedure}\label{sec:methods}
+In this section, we detail the equipment used and experiments performed in this laboratory. Further equipment details may be found in Appendix~\ref{app:equip}
+\subsection{Equipment}
+In this laboratory, we employed 
 \section{Experimental Results}\label{sec:results}
 \section{Discussion}\label{sec:disc}
 \section{Conclusions}\label{sec:conc}
 
 % \bibliographystyle{sty/ieeetran}
-\printbibliography
+\pagebreak\printbibliography
+
+\appendix
+\pagebreak
+\FloatBarrier\section{Equipment Details}\label{app:equip}
+In order to better replicate experiments and identify issues, the details of each equipment piece are recorded in Table~\ref{tab:equip}.
+
+\newcommand{\na}{$N/A$}
+\newcommand{\sref}[1]{$^{\ref{#1}}$}
+\FloatBarrier
+Further details of equipment are listed in Table~\ref{tab:equip}.
+Where a detail could not be identified for a given device, it is replaced with ``\na''.
+\begin{table}[!h]
+    \centering
+    \small
+    \caption{Details of the equipment used in this laboratory.}
+    \label{tab:equip}
+    \scriptsize
+    \begin{tabular}{c|cccc}
+        Item & Manufacturer & Model & ID Type & ID Number\\\hline
+        Module rack & Canberra (now Mirion)\sref{addr:mirion}& Model 2000 & Inventory \# & NE759377 \\
+        Geiger-Muller Detector & \na & \na & \na & \na \\
+        GM Pulse Inverter & Spectrum Techniques\sref{addr:spect} & 2017 GPI & \na & \na \\
+        % Multichannel Analyzer & Ortec\sref{addr:ortec} & EasyMCA & Inventory \# & P10F79090 \\
+        % Weak Source 1 & Spectrum Techniques\sref{addr:spect} & 1.0\micCi ~$^{137}$Cs Beta Source & Date & Sep. 2017 \\
+        % Weak Source 2 & Spectrum Techniques\sref{addr:spect} & 1.0\micCi ~$^{137}$Cs Beta Source & Date & Sep. 2017 \\
+        % Strong Source & Eckert and Ziegler\sref{addr:eck-zieg} & 30\micCi~$^{137}Cs$ Beta Source & Date & Sep. 2017 \\
+        % \InMeta~Source & \na & Irradiated Indium Foil & Date & Feb. 2026 \\
+        High Voltage Power Supply & Caen\sref{addr:caen} & N1470AL & Inventory \# & P10G96054 \\
+        % Pulser & Ortec\sref{addr:ortec} & Model 480 & \na & \na \\
+        % Oscilloscope & Keysight\sref{addr:keys} & Infiniivision DSO-X 2002A & Inventory \# & P10R03513 \\
+        % Counter & Ortec\sref{addr:ortec} & Model 871 & Serial \# & 1024 \\
+        % Preamplifier & Ortec\sref{addr:ortec} & Model 142PC & Serial \# & 2780r17 \\
+        % Amplifier & Ortec\sref{addr:ortec} & Model 590A & Serial \# & 16076205 \\
+        Computer & Dell\sref{addr:dell} & Precision 360 & Eng. IT ID \# & EWS 20426 \\
+
+    \end{tabular}
+    \begin{enumerate}[label=\alph*]
+        \item\label{addr:mirion}
+        Mirion Technologies, Inc.:
+        1218 Menlo Drive,
+        Atlanta, GA;
+        Phone: 770.432.2744;
+        \url{https://ir.mirion.com/}
+        \item\label{addr:spect}
+        Spectrum Techniques:
+        106 Union Valley Rd, Oak Ridge, TN 37830;
+        Phone: 865.482.9937;
+        \url{https://www.spectrumtechniques.com/}
+        \item\label{addr:eck-zieg}
+        Eckert \& Ziegler Isotope Products:
+        24937 Avenue Tibbitts, Valencia, CA 91355;
+        Phone: +1 866 476-9767;
+        \url{https://isotopeproducts.com/}
+        \item\label{addr:caen}
+        Caen Sp.A.:
+        Via della Vetraia, 11, 55049 Viareggio LU - Italy;
+        Phone: +39 0584 388398;
+        \url{https://www.caen.it/}
+        \item\label{addr:keys}
+        Keysight Technologies: 
+        1900 Garden of the Gods Road, Colorado Springs, CO 80907-3423 United States;
+        Phone: 1 800 829-4444;
+        \url{https://www.keysight.com}
+        \item\label{addr:ortec}
+        Advanced Measurement Technology:
+        801 South Illinois Avenue,
+        Oak Ridge, Tennessee 37830,
+        United States;
+        Phone: +1.865.482.4411;
+        Fax: +1.865.483.0396;
+        \url{https://www.ortec-online.com};
+        Email: ortec.info@ametek.com
+        \item\label{addr:dell}
+        Dell Technologies:
+        Dell Technologies
+        1 Dell Way
+        Round Rock, TX 78664.;
+        Phone: 1-877-275-3355;
+        \url{https://www.dell.com/en-us/lp/contact-us}
+    \end{enumerate}
+\end{table}
+\FloatBarrier
 \end{document}
