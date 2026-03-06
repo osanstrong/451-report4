@@ -56,8 +56,47 @@ More broadly, the energy loss phenomena of alpha particles through different mat
 In this section, we detail the equipment used and experiments performed in this laboratory. Further equipment details may be found in Appendix~\ref{app:equip}
 \subsection{Equipment}
 In this laboratory, we employed 
-\section{Experimental Results}\label{sec:results}
-\section{Discussion}\label{sec:disc}
+\section{Experimental Results}\label{sec:results}\FloatBarrier
+
+In \figref{fig:vac_dist_v_I}, the integrated count rate for the alpha source is shown after attenuation through different distances in vacuum. 
+However, to does not account for the geometric attenuation, one must first normalize by solid angle $\Omega$, using the following formula\cite{knoll_radiation_2010}:
+\begin{equation}
+    \Omega=2\pi\left(1-\frac{d}{\sqrt{d^2+a^2}}\right)
+\end{equation}
+where $d$ is the distance of the (point) source from the detector, and $a$ the diameter of the detector, a sufficiently long cylinder.
+This formula assumes the point source is centered on the cylindrical detector's axis.\\
+
+If the source can ``see'' $\frac{\Omega}{4\pi}$ of the detector, then dividing by this fraction yields an intensity normalized by solid angle.
+\figref{fig:vac_dists_v_nI} shows the integrated count rate for distances through vacuum, normalized by solid angle, compared to the original rates.\\
+
+\newcommand{\defplot}[2]{
+    \begin{figure}
+        \centering
+        \includegraphics[width=\figwidth]{fig/#1.png}
+        \caption{#2}
+        \label{fig:#1}
+    \end{figure}
+}
+\defplot{vac_dist_v_I}{The integrated peak intensity of the alpha source after attenuation through varying distances in vacuum.}
+\defplot{vac_dist_v_nI}{The integrated peak intensity of the alpha source after attenuation through varying distances in vacuum, both raw and after normalizing by visible solid angle.}
+
+In Figs.\ref{fig:air_dist_v_I} through \ref{fig:air_dist_v_FWHM}, attenuation over distance in air can be observed through effects on integrated peak intensity (both gross and normalized rates), energy, and full width half maximum (FWHM) of energy peaks.\\
+
+\defplot{air_dist_v_nI}{The integrated peak intensity of the alpha source after attenuation through varying distances in air, both raw and after normalizing by visible solid angle.}
+\defplot{air_dist_v_E}{The peak energy after attenuation through different distances in air.}
+\defplot{air_dist_v_FWHM}{The full width half maximum of peak energy after attenuation through different distances in air.}
+
+The attenuation through aluminum, shown by 
+
+\defplot{Al_thick_v_I}{The integrated peak intensity after attenuation through varying thicknesses of aluminum.}
+\defplot{Al_thick_v_E}{The peak energy after attenuation through varying thicknesses of aluminum.}
+\defplot{Al_thick_v_FWHM}{The full width half maximum of peak energy after attenuation through varying thicknesses of aluminum.}
+
+\defplot{My_thick_v_I}{The integrated peak intensity after attenuation through varying thicknesses of Mylar.}
+\defplot{My_thick_v_E}{The peak energy after attenuation through varying thicknesses of Mylar.}
+\defplot{My_thick_v_FWHM}{The full width half maximum of peak energy after attenuation through varying thicknesses of Mylar.}
+
+\FloatBarrier\section{Discussion}\label{sec:disc}
 \section{Conclusions}\label{sec:conc}
 
 % \bibliographystyle{sty/ieeetran}
