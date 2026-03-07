@@ -52,10 +52,16 @@ More broadly, the energy loss phenomena of alpha particles through different mat
 \subsection{Charged Particle Energy Loss}
 
 
+
 \section{Experimental Procedure}\label{sec:methods}
 In this section, we detail the equipment used and experiments performed in this laboratory. Further equipment details may be found in Appendix~\ref{app:equip}
 \subsection{Equipment}
 In this laboratory, we employed 
+
+
+\subsection{Range Estimation}
+Since particles may not stop at exactly the same distance, to practically estimate the range of the particle and energy, we estimate the range of a particle as the distance where only half the particles are transmitted, as seen in \figref{fig:}
+In lieu of exact particle transmission rates, we then estimate this by the distance where peak intensity drops to half that of that measured for the lowest distance.
 \section{Experimental Results}\label{sec:results}\FloatBarrier
 
 In \figref{fig:vac_dist_v_I}, the integrated count rate for the alpha source is shown after attenuation through different distances in vacuum. 
@@ -67,26 +73,33 @@ where $d$ is the distance of the (point) source from the detector, and $a$ the d
 This formula assumes the point source is centered on the cylindrical detector's axis.\\
 
 If the source can ``see'' $\frac{\Omega}{4\pi}$ of the detector, then dividing by this fraction yields an intensity normalized by solid angle.
-\figref{fig:vac_dists_v_nI} shows the integrated count rate for distances through vacuum, normalized by solid angle, compared to the original rates.\\
+\figref{fig:vac_dist_v_nI} shows the integrated count rate for distances through vacuum, normalized by solid angle, compared to the original rates.\\
 
 \newcommand{\defplot}[2]{
     \begin{figure}
         \centering
         \includegraphics[width=\figwidth]{fig/#1.png}
         \caption{#2}
-        \label{fig:#1}
+        \newcommand{\tmplabel}{fig:#1}
+        \label{\tmplabel}
     \end{figure}
 }
 \defplot{vac_dist_v_I}{The integrated peak intensity of the alpha source after attenuation through varying distances in vacuum.}
 \defplot{vac_dist_v_nI}{The integrated peak intensity of the alpha source after attenuation through varying distances in vacuum, both raw and after normalizing by visible solid angle.}
 
-In Figs.\ref{fig:air_dist_v_I} through \ref{fig:air_dist_v_FWHM}, attenuation over distance in air can be observed through effects on integrated peak intensity (both gross and normalized rates), energy, and full width half maximum (FWHM) of energy peaks.\\
+In Figs.\ref{fig:air_dist_v_nI} through \ref{fig:air_dist_v_FWHM}, attenuation over distance in air can be observed through effects on integrated peak intensity (both gross and normalized rates), energy, and full width half maximum (FWHM) of energy peaks.
+Normalized peak intensity appears to reach half that of the first measurement between the measurements at 17 and 25 mm, yielding a range estimate of $21\pm4$~mm for 5.486 MeV alpha particles in air. 
+\\
 
 \defplot{air_dist_v_nI}{The integrated peak intensity of the alpha source after attenuation through varying distances in air, both raw and after normalizing by visible solid angle.}
 \defplot{air_dist_v_E}{The peak energy after attenuation through different distances in air.}
 \defplot{air_dist_v_FWHM}{The full width half maximum of peak energy after attenuation through different distances in air.}
 
-The attenuation through aluminum, shown by 
+The attenuation through aluminum, also shown through effects on peak intensity, peak energy, and peak FWHM, are shown in Figs.~\ref{fig:Al_thick_v_I}, \ref{fig:Al_thick_v_E}, and~\ref{fig:Al_thick_v_FWHM}.
+Figs.~\ref{fig:My_thick_v_I}, \ref{fig:My_thick_v_E}, and~\ref{fig:My_thick_v_FWHM} show the same for Mylar.
+Intensity appears to halve around 36 microns of aluminum, and with measurements every 18 microns, this yields a range estimate of $36\pm9$~microns in aluminum.
+For Mylar, peak intensity drops below half between 7.2 and 10.8 microns, yielding a range estimate of $9.0\pm1.8$~microns.
+\\
 
 \defplot{Al_thick_v_I}{The integrated peak intensity after attenuation through varying thicknesses of aluminum.}
 \defplot{Al_thick_v_E}{The peak energy after attenuation through varying thicknesses of aluminum.}
@@ -95,6 +108,9 @@ The attenuation through aluminum, shown by
 \defplot{My_thick_v_I}{The integrated peak intensity after attenuation through varying thicknesses of Mylar.}
 \defplot{My_thick_v_E}{The peak energy after attenuation through varying thicknesses of Mylar.}
 \defplot{My_thick_v_FWHM}{The full width half maximum of peak energy after attenuation through varying thicknesses of Mylar.}
+
+\FloatBarrier
+Using the simulated data of 5.486~MeV alpha ion transmission in dry air, aluminum, and Mylar, rough estimates of total stopping power $-dE/dx$, using an estimate of the derivative between adjacent measurements of energy $E$ and $x$
 
 \FloatBarrier\section{Discussion}\label{sec:disc}
 \section{Conclusions}\label{sec:conc}

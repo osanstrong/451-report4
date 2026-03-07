@@ -184,16 +184,16 @@ my_Sp = [get_spectrum(path)/1e3 for path in [f"data/Mylar, {n}, TRANSMIT.txt" fo
 air_TRIMdist = [10, 20, 30]
 air_Sp = [get_spectrum(path)/1e3 for path in [f"data/Air, {d}, TRANSMIT.txt" for d in air_TRIMdist]]
 
-for i in range(5):
-    plt.step(BINS[1:]/1e6, al_Sp[i], label=f"Aluminum, {al_dist[i]} microns")
-for i in range(5):
-    plt.step(BINS[1:]/1e6, my_Sp[i], label=f"Mylar, {my_dist[i]} microns")
-for i in range(3):
-    plt.step(BINS[1:]/1e6, air_Sp[i], label=f"Aluminum, {air_TRIMdist[i]} mm")
-plt.xlabel("E (MeV)")
-plt.ylabel("Number of counts")
-plt.legend()
-plt.show()
+# for i in range(5):
+#     plt.step(BINS[1:]/1e6, al_Sp[i], label=f"Aluminum, {al_dist[i]} microns")
+# for i in range(5):
+#     plt.step(BINS[1:]/1e6, my_Sp[i], label=f"Mylar, {my_dist[i]} microns")
+# for i in range(3):
+#     plt.step(BINS[1:]/1e6, air_Sp[i], label=f"Aluminum, {air_TRIMdist[i]} mm")
+# plt.xlabel("E (MeV)")
+# plt.ylabel("Number of counts")
+# plt.legend()
+# plt.show()
 
 
 al_E = [get_peak_E(path)/1e3 for path in [f"data/Al, {n}, TRANSMIT.txt" for n in range(1,6)]]
@@ -286,3 +286,35 @@ def plot_dEdx(path, skip, mat):
 # plot_dEdx("data/SRIM_ Helium in Aluminum", 24, "aluminum")
 # plot_dEdx("data/SRIM_ Helium in Mylar", 26, "Mylar")
 # plot_dEdx("data/SRIM_ Helium in Air, Dry (gas)", 28, "air")
+
+def load_range(path, skip):
+    df = pd.read_csv(path, delimiter="\s+", skiprows=skip)
+    cols = df.columns
+    foot = 13
+    E = df[cols[0]][:-foot]
+    E = E.astype(float)
+    E[-27:] = E[-27:]*1000
+    E /= 1000
+    range = df[cols[4]][:-foot].astype(float)
+    scale = df[cols[5]][:-foot].replace("um", 1).replace("mm", 1000).replace("A", 1e-4).astype(float)
+    return E, range*scale
+
+air_r = load_range("data/SRIM_ Helium in Air, Dry (gas)", 28)
+al_r = load_range("data/SRIM_ Helium in Aluminum", 24)
+my_r = load_range("data/SRIM_ Helium in Mylar", 26)
+
+plt.plot(air_r[0], air_r[1]/1000, label="Air, SRIM")
+plt.errorbar([5.486], [21], yerr=[4], label="Air, observed")
+plt.xlabel("E (MeV)")
+plt.ylabel("Range (mm)")
+plt.legend()
+plt.show()
+
+plt.plot(al_r[0], al_r[1], label="Aluminum, SRIM")
+plt.errorbar([5.486], [36], yerr=[9], label="Aluminum, observed")
+plt.plot(my_r[0], my_r[1], label="Mylar, SRIM")
+plt.errorbar([5.486], [9], yerr=[1.8], label="Mylar, observed")
+plt.xlabel("E (MeV)")
+plt.ylabel("Range (microns)")
+plt.legend()
+plt.show()
