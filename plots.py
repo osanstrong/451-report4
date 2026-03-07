@@ -50,12 +50,14 @@ air_x = [x*C for x in [
     661.38,
     438.20,
     331.65,
+    0
 ]]
 air_FWHM = [f*C for f in [
     22.22,
     60.39,
     55.56,
     58.84,
+    0
 ]]
 
 # plt.scatter(air_dist, air_I, label="In air")
@@ -144,6 +146,143 @@ my_i = [d[2]*C for d in my_dat] # For now using gross
 
 #### Get peak energy of simulated transmissions
 
+BW = 1e4 #eV
+min_E = 0.1e7
+max_E = 0.7e7
+NB = int(max_E / BW)
+BINS = np.linspace(min_E, max_E, NB)
+
+N_P = 1000
+
+
 # Import and test
 def get_spectrum(fpath):
-    df = pd.read_csv(fpath, sep="\t", skiprows=12)
+    # with open(fpath, 'r') as file:
+    #     print(file.read())
+    df = pd.read_csv(fpath, sep="\s+", skiprows=11)
+    vals = df['(eV)']
+    vals, bins = np.histogram(vals, BINS)
+    return vals*1000
+    # return df['(eV)']
+    # return df
+def get_peak_E_hist(c, bins):
+    return bins[np.argmax(c)]
+def get_peak_E(fpath):  
+    c= get_spectrum(fpath)
+    return get_peak_E_hist(c, BINS)
+# c, bins = get_spectrum("data/Al, 3, TRANSMIT.txt")
+# print(get_peak_E_hist(c, bins))
+# plt.step(BINS[1:], c, label="Simulated 3 layer of Al")
+# plt.xlabel("E (eV)")
+# plt.ylabel("Number of counts")
+# plt.legend()
+# plt.show()
+# print(get_spectrum("data/Al, 1, TRANSMIT.txt")
+
+al_Sp = [get_spectrum(path)/1e3 for path in [f"data/Al, {n}, TRANSMIT.txt" for n in range(1,6)]]
+my_Sp = [get_spectrum(path)/1e3 for path in [f"data/Mylar, {n}, TRANSMIT.txt" for n in range(1,6)]]
+air_TRIMdist = [10, 20, 30]
+air_Sp = [get_spectrum(path)/1e3 for path in [f"data/Air, {d}, TRANSMIT.txt" for d in air_TRIMdist]]
+
+for i in range(5):
+    plt.step(BINS[1:]/1e6, al_Sp[i], label=f"Aluminum, {al_dist[i]} microns")
+for i in range(5):
+    plt.step(BINS[1:]/1e6, my_Sp[i], label=f"Mylar, {my_dist[i]} microns")
+for i in range(3):
+    plt.step(BINS[1:]/1e6, air_Sp[i], label=f"Aluminum, {air_TRIMdist[i]} mm")
+plt.xlabel("E (MeV)")
+plt.ylabel("Number of counts")
+plt.legend()
+plt.show()
+
+
+al_E = [get_peak_E(path)/1e3 for path in [f"data/Al, {n}, TRANSMIT.txt" for n in range(1,6)]]
+# al_E[2] = (al_E[1] + al_E[3])/2
+# plt.scatter(al_dist, al_E, label="Aluminum")
+# plt.xlabel("Thickness of material (microns)")
+# plt.ylabel("Peak energy (keV)")
+# plt.legend()
+# plt.show()
+
+my_E = [get_peak_E(path)/1e3 for path in [f"data/Mylar, {n}, TRANSMIT.txt" for n in range(1,6)]]
+# plt.scatter(my_dist, my_E, label="Mylar")
+# plt.xlabel("Thickness of material (microns)")
+# plt.ylabel("Peak energy (keV)")
+# plt.legend()
+# plt.show()
+air_E = [get_peak_E(path)/1e3 for path in [f"data/Air, {d}, TRANSMIT.txt" for d in [10, 20, 30]]]
+
+
+
+# my_E = my_x
+# my_dEdx = [(my_E[i] - my_E[i+1])/(my_dist[i+1]-my_dist[i]) for i in range(len(my_dist)-1)]
+# my_Ed = [(my_E[i] + my_E[i+1])/2 for i in range(len(my_E)-1)]
+# plt.scatter(my_Ed, my_dEdx, label="Mylar")
+# print(my_dEdx)
+# plt.xlabel("Energy (keV)")
+# plt.ylabel("Stopping power -dE/dx (keV/micron)")
+# plt.legend()
+# plt.show()
+
+# air_E = air_x
+
+
+# air_E = [get_peak_E(path)/1e3 for path in [f"data/Air, {d}, TRANSMIT.txt" for d in air_dist[:-1]]] + [0]
+
+# air_dEdx = [(air_E[i] - air_E[i+1])/(air_dist[i+1]-air_dist[i]) for i in range(len(air_dist)-1)]
+# air_Ed = [(air_E[i] + air_E[i+1])/2 for i in range(len(air_E)-1)]
+# plt.scatter(air_Ed, air_dEdx, label="Air")
+# print(air_dEdx)
+# plt.xlabel("Energy (keV)")
+# plt.ylabel("Stopping power -dE/dx (keV/mm)")
+# plt.legend()
+# plt.show()
+
+# al_E = al_x
+
+# al_dEdx = [(al_E[i] - al_E[i+1])/(al_dist[i+1]-al_dist[i]) for i in range(len(al_dist)-1)]
+# al_Ed = [(al_E[i] + al_E[i+1])/2 for i in range(len(al_E)-1)]
+# plt.scatter(al_Ed, al_dEdx, label="Aluminum")
+# print(al_dEdx)
+# plt.xlabel("Energy (keV)")
+# plt.ylabel("Stopping power -dE/dx (keV/micron)")
+# plt.legend()
+# plt.show()
+
+
+def load_dEdx(path, skip):
+    df = pd.read_csv(path, delimiter="\s+", skiprows=skip)
+    cols = df.columns
+    foot = 13
+    E = df[cols[0]][:-foot]
+    E = E.astype(float)
+    E[-27:] = E[-27:]*1000
+    E /= 1000
+    Se = df[cols[2]][:-foot].astype(float)
+    Sn = df[cols[3]][:-foot].astype(float)
+    St = Se + Sn
+    print(E)
+    return E, Se, Sn, St
+
+def plot_dEdx(path, skip, mat):
+    # df = pd.read_csv(path, delimiter="\s+", skiprows=24)
+    # cols = df.columns
+    # E = df[cols[0]]
+    # Se = df[cols[2]]
+    # Sn = df[cols[3]]
+    # St = Se + Sn
+    E, Se, Sn, St = load_dEdx(path, skip)
+
+    plt.plot(E, Se, label=f"Electric, in {mat}")
+    plt.plot(E, Sn, label=f"Nuclear, in {mat}")
+    plt.plot(E, St, label=f"Total, in {mat}")
+    plt.xlabel("E (MeV)")
+    plt.ylabel("Stopping Power -dE/dx (keV/micron)")
+    plt.legend()
+    plt.show()
+
+    return E, Se, Sn, St
+
+# plot_dEdx("data/SRIM_ Helium in Aluminum", 24, "aluminum")
+# plot_dEdx("data/SRIM_ Helium in Mylar", 26, "Mylar")
+# plot_dEdx("data/SRIM_ Helium in Air, Dry (gas)", 28, "air")
