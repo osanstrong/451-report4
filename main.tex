@@ -68,7 +68,9 @@
 \section{Introduction and Background}
 A key metric of interest for radiation in matter is range, that is, the depth along the initial direction which a particle is expected, on average, to penetrate through a material.
 For a given type of particle, this range is further highly dependent on an incident particle's energy and the electron/neutron densities of the medium.\cite{npre_lab_4_manual_2025}
-This laboratory investigates the range of alpha particles, as emitted by \AmSrc and \PoSrc, through aluminum metal, Mylar\footnote{While material names are usually kept in lowercase, ``Mylar'' is a brand name, and remains accordingly capitalized in this report.} plastic, and air.
+This range is related to another property of interest: stopping power, or the loss of energy as a charged particle travels through a medium.\\
+
+This laboratory investigates the range and stopping power of alpha particles, as emitted by \AmSrc, through aluminum metal, Mylar\footnote{While material names are usually kept in lowercase, ``Mylar'' is a brand name, and remains accordingly capitalized in this report.} plastic, and air, in experimental data compared to computer-generated data.
 More broadly, the energy loss phenomena of alpha particles through different materials, including energy straggling, and the effects of geometric attenuation corresponding to solid angle, are also investigated.
 \subsection{Charged Particle Energy Loss}
 
@@ -91,7 +93,7 @@ The projected range $R_p$ of a particle with energy $E$ can then be found by int
 \end{equation}
 With correct stopping powers, Equation~\ref{eq:range} could be used to calculate the range of a particle, or a numerical simulation such as  Monte Carlo code could be used to determine the range to compare with experimental data.\\
 
-In this laboratory, we use the SRIM (Stopping and Range of Ions in Matter) and TRIM (Transport and Range of Ions in Matter, included within SRIM) codes to generate these estimations.
+In this laboratory, the SRIM (Stopping and Range of Ions in Matter) and TRIM (Transport and Range of Ions in Matter, included within SRIM) codes will be used to generate these estimations.
 TRIM is a Monte Carlo code which simulates the energy loss of individual ions through a wide variety of materials and compounds, which can be compared to experimental observations.
 \section{Experimental Procedure}\label{sec:methods}
 In this section, we detail the equipment used and experiments performed in this laboratory. 
@@ -289,6 +291,20 @@ From the SRIM stopping power calculations in Figs.\ref{fig:air_SRIM}, \ref{fig:A
 While nuclear stopping power is a small factor at low energies close to 10~keV, across any higher energies, electron stopping power dramatically dominates, with the curves for electron and total stopping power becoming all but indistinguishable.
 
 \section{Conclusions}\label{sec:conc}
+
+The objectives of the laboratory were met with mixed success.
+Energy spectra of alpha particles emitted by the \AmSrc alpha source were successfully measured, in vacuum, air, aluminum, and Mylar.
+Analogous alpha particle transmission was successfully simulated using TRIM to compare and supplement these data, while stopping power and range tables were successfully generated using SRIM, and suggesting that electronic stopping power dominates for all three materials' attenuation of alpha particles.\\
+
+Ranges of 5.486~MeV alpha particles in air, aluminum, and Mylar were estimated ($21\pm4$~mm in air, $36\pm9$~microns in aluminum, and $9.0\pm1.8$~microns in Mylar), however for air and Mylar, range estimations were significantly less than those found in SRIM tables, and for aluminum the thickness of sheets used compared to range limited the certainty of its measurement.\\
+
+Owing to the short range of alpha particles in aluminum compared to the thicknesses measured, transmission-data-based estimates of stopping power $-dE/dx$ were unachieved, while such estimates for Mylar and air seemed to overestimate those found in SRIM tables, even when using simulated TRIM data.\\
+
+Characterization of geometric attenuation by solid angle was not successfully demonstrated, with peak intensity still consistently decreasing over distance in vacuum when normalized by solid angle.\\
+
+Energy straggling was successfully demonstrated using TRIM generated spectra.\\
+
+In all, the measurements of range and stopping power could be improved with a finer distribution of material thicknesses, a more successful normalization by solid angle, and more precise handling of thin materials.
 
 % \bibliographystyle{sty/ieeetran}
 \pagebreak\printbibliography
