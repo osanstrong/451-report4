@@ -21,9 +21,18 @@
 
 % Common Macros
 \newcommand{\figref}[1]{Fig.~\ref{#1}}
+\newcommand{\defplot}[2]{
+    \begin{figure}
+        \centering
+        \includegraphics[width=\figwidth]{fig/#1.png}
+        \caption{#2}
+        \newcommand{\tmplabel}{fig:#1}
+        \label{\tmplabel}
+    \end{figure}
+}
 
 % Specific lab to lab
-\newcommand{\micCi}{~$\mathrm{\mu Ci}$~}
+\newcommand{\micCi}{\xspace$\mathrm{\mu Ci}$\xspace}
 \newcommand{\AmSrc}{\xspace$^{241}$Am\xspace}
 \newcommand{\PoSrc}{\xspace$^{210}$Po\xspace}
 
@@ -54,11 +63,19 @@ More broadly, the energy loss phenomena of alpha particles through different mat
 
 
 \section{Experimental Procedure}\label{sec:methods}
-In this section, we detail the equipment used and experiments performed in this laboratory. Further equipment details may be found in Appendix~\ref{app:equip}
+In this section, we detail the equipment used and experiments performed in this laboratory. 
 \subsection{Equipment}
-In this laboratory, we employed 
+In this laboratory, we employed an alpha spectrometer attached to a vacuum pump, a multichannel analyzer (MCA), a 0.1, and a computer with the software Maestro installed.
+Further equipment details, where applicable, may be found in Appendix~\ref{app:equip}
 
+\subsection{Setup}
+\FloatBarrier
+A system according to \figref{fig:Lab4_diag} was set up to observe alpha particle energy spectra from a given 
 
+\defplot{Lab4_setup}{The experimental setup used during the laboratory.}
+\defplot{Lab4_diag}{A system diagram of the laboratory setup.}
+
+\FloatBarrier
 \subsection{Range Estimation}
 Since particles may not stop at exactly the same distance, to practically estimate the range of the particle and energy, we estimate the range of a particle as the distance where only half the particles are transmitted, as seen in \figref{fig:}
 In lieu of exact particle transmission rates, we then estimate this by the distance where peak intensity drops to half that of that measured for the lowest distance.
@@ -75,15 +92,7 @@ This formula assumes the point source is centered on the cylindrical detector's 
 If the source can ``see'' $\frac{\Omega}{4\pi}$ of the detector, then dividing by this fraction yields an intensity normalized by solid angle.
 \figref{fig:vac_dist_v_nI} shows the integrated count rate for distances through vacuum, normalized by solid angle, compared to the original rates.\\
 
-\newcommand{\defplot}[2]{
-    \begin{figure}
-        \centering
-        \includegraphics[width=\figwidth]{fig/#1.png}
-        \caption{#2}
-        \newcommand{\tmplabel}{fig:#1}
-        \label{\tmplabel}
-    \end{figure}
-}
+
 \defplot{vac_dist_v_I}{The integrated peak intensity of the alpha source after attenuation through varying distances in vacuum.}
 \defplot{vac_dist_v_nI}{The integrated peak intensity of the alpha source after attenuation through varying distances in vacuum, both raw and after normalizing by visible solid angle.}
 
@@ -126,9 +135,9 @@ For aluminum, TRIM did not calculate any ions being successfully transmitted thr
 Using SRIM, we calculated nuclear, electron, and total stopping powers for alpha particles ranging in energy from 10~keV to 10~MeV.
 These are plotted in \figref{fig:air_SRIM} for air, \figref{fig:Al_SRIM} for aluminum, and \figref{fig:My_SRIM} for Mylar.\\
 
-\defplot{air_SRIM}{The nuclear, electron, and total stopping powers of air for alpha particle ions of energies ranging from 10~keV to 10~MeV, calculated using SRIM.}
+\defplot{air_SRIM}{The nuclear, electron, and total stopping powers of air for alpha particle ions of energies ranging from 10~keV to 10~MeV, calculated using SRIM, compared to the total stopping power estimated from transmission data.}
 \defplot{Al_SRIM}{The nuclear, electron, and total stopping powers of aluminum for alpha particle ions of energies ranging from 10~keV to 10~MeV, calculated using SRIM.}
-\defplot{My_SRIM}{The nuclear, electron, and total stopping powers of Mylar for alpha particle ions of energies ranging from 10~keV to 10~MeV, calculated using SRIM.}
+\defplot{My_SRIM}{The nuclear, electron, and total stopping powers of Mylar for alpha particle ions of energies ranging from 10~keV to 10~MeV, calculated using SRIM, compared to the total stopping power estimated from transmission data.}
 
 \FloatBarrier
 
@@ -164,7 +173,15 @@ Instead, it is still possible that source location shifted more than trivially b
 In the same figure, we observe a seemingly more accurate estimation of range in aluminum, but a much more substantial error.
 This error reflects a large difference in thickness between different measurements, and suggests we did not have thin enough sheets of aluminum to precisely estimate the range of 5.486~MeV alpha particles in aluminum.\\
 
+While total stopping power could not be estimated with transmission data for aluminum, the estimates for Mylar and air both seemed to consistently overestimate compared to SRIM data.
+While this is consistent with our experimental ranges in both materials being lower than SRIM data, it is unlikely that experimental flaws, like altered detector position, solid angle calculations, or Mylar distortions would affect these stopping power estimates, given that we conducted these estimates using TRIM data over the experimental data.
+It is possible that our estimate of $-dE/dx$ using Equation~\ref{eq:dedx} is flawed, especially for such drastic differences in thickness and energy attenuation.\\
 
+We observe substantial energy straggling in the transmitted alpha particle energy spectra generated by TRIM, seen in \figref{fig:combined-spectra}.
+As expected, rather than consistently decaying to one precise energy, we see a distribution of energies around a central peak, and this peak widens the more the ions are attenuated (i.e., to lower energy $E$).\\
+
+From the SRIM stopping power calculations in Figs.\ref{fig:air_SRIM}, \ref{fig:Al_SRIM}, and~\ref{fig:My_SRIM}, we see that 5.486~MeV alpha particles seem to lose most of their energy through electric mechanisms.
+While nuclear stopping power is a small factor at low energies close to 10~keV, across any higher energies, electron stopping power dramatically dominates, with the curves for electron and total stopping power becoming all but indistinguishable.
 
 \section{Conclusions}\label{sec:conc}
 

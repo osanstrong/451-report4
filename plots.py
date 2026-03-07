@@ -215,8 +215,8 @@ air_E = [get_peak_E(path)/1e3 for path in [f"data/Air, {d}, TRANSMIT.txt" for d 
 
 
 # my_E = my_x
-# my_dEdx = [(my_E[i] - my_E[i+1])/(my_dist[i+1]-my_dist[i]) for i in range(len(my_dist)-1)]
-# my_Ed = [(my_E[i] + my_E[i+1])/2 for i in range(len(my_E)-1)]
+my_dEdx = [(my_E[i] - my_E[i+1])/(my_dist[i+1]-my_dist[i]) for i in range(len(my_dist)-1)]
+my_Ed = [(my_E[i] + my_E[i+1])/2 for i in range(len(my_E)-1)]
 # plt.scatter(my_Ed, my_dEdx, label="Mylar")
 # print(my_dEdx)
 # plt.xlabel("Energy (keV)")
@@ -227,16 +227,16 @@ air_E = [get_peak_E(path)/1e3 for path in [f"data/Air, {d}, TRANSMIT.txt" for d 
 # air_E = air_x
 
 
-# air_E = [get_peak_E(path)/1e3 for path in [f"data/Air, {d}, TRANSMIT.txt" for d in air_dist[:-1]]] + [0]
+air_E = [get_peak_E(f"data/Air, {d}, TRANSMIT.txt")/1e3 for d in air_dist[:-1]] + [0]
 
-# air_dEdx = [(air_E[i] - air_E[i+1])/(air_dist[i+1]-air_dist[i]) for i in range(len(air_dist)-1)]
-# air_Ed = [(air_E[i] + air_E[i+1])/2 for i in range(len(air_E)-1)]
-# plt.scatter(air_Ed, air_dEdx, label="Air")
-# print(air_dEdx)
-# plt.xlabel("Energy (keV)")
-# plt.ylabel("Stopping power -dE/dx (keV/mm)")
-# plt.legend()
-# plt.show()
+air_dEdx = [(air_E[i] - air_E[i+1])/(air_dist[i+1]-air_dist[i]) for i in range(len(air_dist)-1)]
+air_Ed = [(air_E[i] + air_E[i+1])/2 for i in range(len(air_E)-1)]
+plt.scatter(air_Ed, air_dEdx, label="Air")
+print(air_dEdx)
+plt.xlabel("Energy (keV)")
+plt.ylabel("Stopping power -dE/dx (keV/mm)")
+plt.legend()
+plt.show()
 
 # al_E = al_x
 
@@ -264,7 +264,7 @@ def load_dEdx(path, skip):
     print(E)
     return E, Se, Sn, St
 
-def plot_dEdx(path, skip, mat):
+def plot_dEdx(path, skip, mat, trans_est):
     # df = pd.read_csv(path, delimiter="\s+", skiprows=24)
     # cols = df.columns
     # E = df[cols[0]]
@@ -276,6 +276,8 @@ def plot_dEdx(path, skip, mat):
     plt.plot(E, Se, label=f"Electric, in {mat}")
     plt.plot(E, Sn, label=f"Nuclear, in {mat}")
     plt.plot(E, St, label=f"Total, in {mat}")
+    if not trans_est is None:
+        plt.scatter(trans_est[0], trans_est[1], label=f"Total in {mat}, Transmission estimate")
     plt.xlabel("E (MeV)")
     plt.ylabel("Stopping Power -dE/dx (keV/micron)")
     plt.legend()
@@ -283,9 +285,9 @@ def plot_dEdx(path, skip, mat):
 
     return E, Se, Sn, St
 
-# plot_dEdx("data/SRIM_ Helium in Aluminum", 24, "aluminum")
-# plot_dEdx("data/SRIM_ Helium in Mylar", 26, "Mylar")
-# plot_dEdx("data/SRIM_ Helium in Air, Dry (gas)", 28, "air")
+# plot_dEdx("data/SRIM_ Helium in Aluminum", 24, "aluminum", None)
+# plot_dEdx("data/SRIM_ Helium in Mylar", 26, "Mylar", ([e/1e3 for e in my_Ed], [e for e in my_dEdx]))
+plot_dEdx("data/SRIM_ Helium in Air, Dry (gas)", 28, "air", ([e/1e3 for e in air_Ed], [e/1e3 for e in air_dEdx]))
 
 def load_range(path, skip):
     df = pd.read_csv(path, delimiter="\s+", skiprows=skip)
@@ -299,22 +301,22 @@ def load_range(path, skip):
     scale = df[cols[5]][:-foot].replace("um", 1).replace("mm", 1000).replace("A", 1e-4).astype(float)
     return E, range*scale
 
-air_r = load_range("data/SRIM_ Helium in Air, Dry (gas)", 28)
-al_r = load_range("data/SRIM_ Helium in Aluminum", 24)
-my_r = load_range("data/SRIM_ Helium in Mylar", 26)
+# air_r = load_range("data/SRIM_ Helium in Air, Dry (gas)", 28)
+# al_r = load_range("data/SRIM_ Helium in Aluminum", 24)
+# my_r = load_range("data/SRIM_ Helium in Mylar", 26)
 
-plt.plot(air_r[0], air_r[1]/1000, label="Air, SRIM")
-plt.errorbar([5.486], [21], yerr=[4], label="Air, observed")
-plt.xlabel("E (MeV)")
-plt.ylabel("Range (mm)")
-plt.legend()
-plt.show()
+# plt.plot(air_r[0], air_r[1]/1000, label="Air, SRIM")
+# plt.errorbar([5.486], [21], yerr=[4], label="Air, observed")
+# plt.xlabel("E (MeV)")
+# plt.ylabel("Range (mm)")
+# plt.legend()
+# plt.show()
 
-plt.plot(al_r[0], al_r[1], label="Aluminum, SRIM")
-plt.errorbar([5.486], [36], yerr=[9], label="Aluminum, observed")
-plt.plot(my_r[0], my_r[1], label="Mylar, SRIM")
-plt.errorbar([5.486], [9], yerr=[1.8], label="Mylar, observed")
-plt.xlabel("E (MeV)")
-plt.ylabel("Range (microns)")
-plt.legend()
-plt.show()
+# plt.plot(al_r[0], al_r[1], label="Aluminum, SRIM")
+# plt.errorbar([5.486], [36], yerr=[9], label="Aluminum, observed")
+# plt.plot(my_r[0], my_r[1], label="Mylar, SRIM")
+# plt.errorbar([5.486], [9], yerr=[1.8], label="Mylar, observed")
+# plt.xlabel("E (MeV)")
+# plt.ylabel("Range (microns)")
+# plt.legend()
+# plt.show()
