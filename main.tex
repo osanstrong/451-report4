@@ -23,7 +23,7 @@
 % Common Macros
 \newcommand{\figref}[1]{Fig.~\ref{#1}}
 \newcommand{\defplotW}[3]{
-    \begin{figure}
+    \begin{figure}[!htb]
         \centering
         \includegraphics[width=#3\linewidth]{fig/#1.png}
         \caption{#2}
@@ -31,17 +31,17 @@
         \label{\tmplabel}
     \end{figure}
 }
-\newcommand{\defplotJPG}[2]{\defplotW{#1}{#2}{0.75}}
-\newcommand{\defplotJPGW}[3]{
-    \begin{figure}
-        \centering
-        \includegraphics[width=#3\linewidth]{fig/#1.jpg}
-        \caption{#2}
-        \newcommand{\tmplabel}{fig:#1}
-        \label{\tmplabel}
-    \end{figure}
-}
 \newcommand{\defplot}[2]{\defplotW{#1}{#2}{0.75}}
+% \newcommand{\defplotJPGW}[3]{
+%     \begin{figure}
+%         \centering
+%         \includegraphics[width=#3\linewidth]{fig/#1.jpg}
+%         \caption{#2}
+%         \newcommand{\tmplabel}{fig:#1}
+%         \label{\tmplabel}
+%     \end{figure}
+% }
+% \newcommand{\defplotJPG}[2]{\defplotJPGW{#1}{#2}{0.75}}
 
 % Specific lab to lab
 \newcommand{\micCi}{\xspace$\mathrm{\mu Ci}$\xspace}
@@ -72,8 +72,27 @@ This laboratory investigates the range of alpha particles, as emitted by \AmSrc 
 More broadly, the energy loss phenomena of alpha particles through different materials, including energy straggling, and the effects of geometric attenuation corresponding to solid angle, are also investigated.
 \subsection{Charged Particle Energy Loss}
 
+As charged particles travel through a material, they lose energy.
+This loss can be quantified by the stopping power of the material.
+This stopping power can be understood as the energy lost per unit distance traveled, and is denoted $-dE/dx$.
+The two primary mechanisms by which this loss occurs are Coulomb interactions with electrons in the material, causing constant small deflections and loss, and Coulomb collisions with nuclei, which are rarer but can cause much greater deflection and loss.
+This relationship is thus denoted:
+\begin{equation}\label{eq:stop-split}
+    \left(-\frac{dE}{dx}\right)_{total}=\left(-\frac{dE}{dx}\right)_{electronic} + \left(-\frac{dE}{dx}\right)_{nuclear}
+\end{equation}
+This negative sign is often included by convention, to consider stopping power as a positive quantity, where $dE/dx$ itself is necessarily negative as the energy decreases through material.
+An example comparison of electronic and nuclear stopping powers across different energies of alpha particles in iron may be seen in \figref{fig:intr0-ironstop}.\\
 
+\defplot{intr0-ironstop}{The electronic and nuclear stopping powers for alpha particles in iron. Figure sourced from lab manual.\cite{npre_lab_4_manual_2025}}
 
+The projected range $R_p$ of a particle with energy $E$ can then be found by integrating total stopping power from starting energy to complete loss of energy $E\rightarrow0$:
+\begin{equation}\label{eq:range}
+    E_p = \int_0^{R_p}dx = \int_E^0\frac{dE'}{\frac{dE}{dx}(E')}
+\end{equation}
+With correct stopping powers, Equation~\ref{eq:range} could be used to calculate the range of a particle, or a numerical simulation such as  Monte Carlo code could be used to determine the range to compare with experimental data.\\
+
+In this laboratory, we use the SRIM (Stopping and Range of Ions in Matter) and TRIM (Transport and Range of Ions in Matter, included within SRIM) codes to generate these estimations.
+TRIM is a Monte Carlo code which simulates the energy loss of individual ions through a wide variety of materials and compounds, which can be compared to experimental observations.
 \section{Experimental Procedure}\label{sec:methods}
 In this section, we detail the equipment used and experiments performed in this laboratory. 
 \subsection{Equipment}
