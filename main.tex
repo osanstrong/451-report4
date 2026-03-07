@@ -66,7 +66,7 @@ In lieu of exact particle transmission rates, we then estimate this by the dista
 
 In \figref{fig:vac_dist_v_I}, the integrated count rate for the alpha source is shown after attenuation through different distances in vacuum. 
 However, to does not account for the geometric attenuation, one must first normalize by solid angle $\Omega$, using the following formula\cite{knoll_radiation_2010}:
-\begin{equation}
+\begin{equation}\label{eq:sangle}
     \Omega=2\pi\left(1-\frac{d}{\sqrt{d^2+a^2}}\right)
 \end{equation}
 where $d$ is the distance of the (point) source from the detector, and $a$ the diameter of the detector, a sufficiently long cylinder.
@@ -110,9 +110,62 @@ For Mylar, peak intensity drops below half between 7.2 and 10.8 microns, yieldin
 \defplot{My_thick_v_FWHM}{The full width half maximum of peak energy after attenuation through varying thicknesses of Mylar.}
 
 \FloatBarrier
-Using the simulated data of 5.486~MeV alpha ion transmission in dry air, aluminum, and Mylar, rough estimates of total stopping power $-dE/dx$, using an estimate of the derivative between adjacent measurements of energy $E$ and $x$
+Using the simulated data of 5.486~MeV alpha ion transmission in dry air, aluminum, and Mylar in TRIM, rough estimates of total stopping power $-dE/dx$, using an estimate of the derivative between adjacent measurements of energy $E$ and $x$:
+\begin{equation}\label{eq:dedx}
+    -\frac{-dE_{i+\frac{1}{2}}}{dx_{i+\frac{1}{2}}}\approx\frac{E_i-E_{i+1}}{x_{i+1}-x_i}
+\end{equation}
+where $E_{i+\frac{1}{2}}=\frac{1}{2}(E_i+E_{i+1})$.
+Using equation~\ref{eq:dedx}, estimates of total stopping power $-dE/dx$ can be observed in \figref{fig:air_dEdx} and \figref{fig:My_dEdx}.
+For aluminum, TRIM did not calculate any ions being successfully transmitted through more than 1 layer, and so no stopping power estimate could be made this way.\\
+
+\defplot{air_dEdx}{The total stopping power of 5.486MeV alpha particles in air, estimated using energy attenuation at five distances calculated by TRIM.}
+\defplot{My_dEdx}{The total stopping power of 5.486MeV alpha particles in Mylar, estimated using energy attenuation at five distances calculated by TRIM.}
+
+\FloatBarrier
+
+Using SRIM, we calculated nuclear, electron, and total stopping powers for alpha particles ranging in energy from 10~keV to 10~MeV.
+These are plotted in \figref{fig:air_SRIM} for air, \figref{fig:Al_SRIM} for aluminum, and \figref{fig:My_SRIM} for Mylar.\\
+
+\defplot{air_SRIM}{The nuclear, electron, and total stopping powers of air for alpha particle ions of energies ranging from 10~keV to 10~MeV, calculated using SRIM.}
+\defplot{Al_SRIM}{The nuclear, electron, and total stopping powers of aluminum for alpha particle ions of energies ranging from 10~keV to 10~MeV, calculated using SRIM.}
+\defplot{My_SRIM}{The nuclear, electron, and total stopping powers of Mylar for alpha particle ions of energies ranging from 10~keV to 10~MeV, calculated using SRIM.}
+
+\FloatBarrier
+
+Likewise, we calculated the projected range of alpha particles with energies ranging from 10~keV to 10~MeV using SRIM.
+\figref{fig:air_range} compares these ranges to the range for 5.486~MeV alpha particles in air, while \figref{fig:AlMy_range} compares these for aluminum and Mylar.
+
+\defplot{air_range}{The range of alpha particles between 10~keV and 10~MeV in energy in air, calculated using SRIM, compared to the 5.486~MeV range estimated using experimental attenuation.}
+\defplot{AlMy_range}{The range of alpha particles between 10~keV and 10~MeV in energy in aluminum and Mylar, as calculated using SRIM, compared to the 5.486~MeV ranges estimated using experimental attenuation.}
+
+\FloatBarrier
+
+The energy spectra of 5.486 MeV alpha particles transmitted through various distances in air, aluminum, and Mylar can be compared in \figref{fig:combined-spectra}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{fig/combined_spectra.png}
+    \caption{Energy spectra of 5.486 MeV alpha particles transmitted through various thicknesses of air, aluminum, and Mylar.}
+    \label{fig:combined-spectra}
+\end{figure}
 
 \FloatBarrier\section{Discussion}\label{sec:disc}
+The solid angle calculation of Equation~\ref{eq:sangle} are expected to normalize the intensity measured between measurements with the source different distances away from the detector.
+However, this is not what is observed.
+In \figref{fig:vac_dist_v_nI}, while normalization makes the ratios between the different distances' integrated intensity less drastic, it does not remove the relationship of these intensities to the distances they were taken at in vacuum, with further distances still resulting in substantially lower peak intensity.
+This might result from a lack of a perfect vacuum being drawn, but might also reflect an imperfect accounting for solid angle.
+For example, while Equation~\ref{eq:sangle} treats the source as a point source perfectly aligned with the cylindrical detector's axis, it is possible the source is large enough or was far enough off-axis to affect this approximation.\\
+
+The ranges estimated for 5.486~MeV alpha particles using experimental data varied in accuracy.
+In \figref{fig:air_range}, we estimate a range in air substantially lower than that calculated by SRIM.
+If our solid angle normalization were imperfect in a way that further decreased intensity by distance than we expected, this might result in such an underestimate in range.
+The range in Mylar (\figref{fig:AlMy_range}) was also drastically underestimated, but since these measurements were taken at the same distance, solid angle calculations would not account for this error.
+Instead, it is still possible that source location shifted more than trivially between measurements, or that wrinkles in the somewhat unwieldy Mylar sheets resulted in greater thickness than expected.
+In the same figure, we observe a seemingly more accurate estimation of range in aluminum, but a much more substantial error.
+This error reflects a large difference in thickness between different measurements, and suggests we did not have thin enough sheets of aluminum to precisely estimate the range of 5.486~MeV alpha particles in aluminum.\\
+
+
+
 \section{Conclusions}\label{sec:conc}
 
 % \bibliographystyle{sty/ieeetran}
