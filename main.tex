@@ -60,6 +60,7 @@
 \maketitle
 \pagebreak
 {\hypersetup{linkcolor=black}\tableofcontents}
+\pagebreak
 \pagenumbering{arabic}
 \begin{abstract}
 A highly important characterizations of radiation interaction with matter is the range of charged particles in matter, and the related property of stopping power.
@@ -70,16 +71,17 @@ We compared these data to ranges, stopping powers, and transmission spectra gene
 
 We estimated ranges of $21\pm4$~mm in air, $36\pm9$~microns in aluminum, and $9.0\pm1.8$~microns in Mylar.
 We observed ranges in air and Mylar drastically lower than SRIM ranges, while the range in aluminum was more comparable.
-Likewise, we found stopping powers using TRIM data of air and Mylar in excess of SRIM stopping powers, while aluminum stopping powers were incalculable using experimental or TRIM data due to the thickness of aluminum used.
+Likewise, we found stopping powers using TRIM data of air and Mylar in excess of SRIM stopping powers, while aluminum stopping powers were incalculable using experimental or TRIM data due to low transmission through assessed thicknesses of the material.
 In the same SRIM data, we observed a strong dominance of electronic stopping power in the total stopping power of alpha particles for all three materials.\\
 
 We were unable to characterize the geometric attenuation of the measurements in air, with theoretical solid angle calculations still yielding normalized intensities through vacuum which decreased over the same distances from the detector.
 We observed noticeable energy straggling in the TRIM-generated spectra of transmitted alpha particles through the materials, having wider distributions of energy the more drastically attenuated particles were.\\
 
-These results demonstrate the importance of experimental setup parameters like material thickness choice and handling, solid angle normalization, and comparison with theoretical data in assessing range and stopping power, and may be of use to those either working with similar ions and materials, or wishing to investigate ion stopping power and ranges in materials.
+These results demonstrate the importance of experimental setup parameters such as material thickness choice and handling, solid angle normalization, vacuum production, and comparison with theoretical data in assessing range and stopping power, and may be of use to those either working with similar ions and materials, or wishing to investigate ion stopping power and ranges in materials.
 \end{abstract}
 
 \section{Introduction and Background}
+\interfootnotelinepenalty=10000
 A key metric of interest for radiation in matter is range, that is, the depth along the initial direction which a particle is expected, on average, to penetrate through a material.
 For a given type of particle, this range is further highly dependent on an incident particle's energy and the electron/neutron densities of the medium.\cite{npre_lab_4_manual_2025}
 This range is related to another property of interest: stopping power, or the loss of energy as a charged particle travels through a medium.\\
@@ -107,13 +109,14 @@ The projected range $R_p$ of a particle with energy $E$ can then be found by int
 \end{equation}
 With correct stopping powers, Equation~\ref{eq:range} could be used to calculate the range of a particle, or a numerical simulation such as  Monte Carlo code could be used to determine the range to compare with experimental data.\\
 
-In this laboratory, the SRIM (Stopping and Range of Ions in Matter) and TRIM (Transport and Range of Ions in Matter, included within SRIM) codes will be used to generate these estimations.
+In this laboratory, the SRIM (Stopping and Range of Ions in Matter) and TRIM (Transport and Range of Ions in Matter, included within SRIM) codes are used to generate these estimations.
 TRIM is a Monte Carlo code which simulates the energy loss of individual ions through a wide variety of materials and compounds, which can be compared to experimental observations.
+\FloatBarrier
 \section{Experimental Procedure}\label{sec:methods}
 In this section, we detail the equipment used and experiments performed in this laboratory. 
 \subsection{Equipment}
 In this laboratory, we employed an alpha spectrometer attached to a vacuum pump, with a silicon surface barrier detector biased by a high voltage power supply (HVPS), a multichannel analyzer (MCA), a 0.1 \micCi alpha particle source, five 18 micron thick sheets of aluminum, five 3.6 micron thick sheets of Mylar, and a computer with the softwares Maestro and SRIM/TRIM installed.
-Further equipment details, where applicable, may be found in Appendix~\ref{app:equip}
+Further equipment details, where applicable, may be found in Appendix~\ref{app:equip}.
 
 \subsection{Setup}
 \FloatBarrier
@@ -239,6 +242,9 @@ For Mylar, peak intensity drops below half between 7.2 and 10.8 microns, yieldin
 \defplot{My_thick_v_E}{The peak energy after attenuation through varying thicknesses of Mylar.}
 \defplot{My_thick_v_FWHM}{The full width half maximum of peak energy after attenuation through varying thicknesses of Mylar.}
 
+For three layers of Mylar, and to a lesser extent for four and five, a bifurcation of the dominant peak was also observed, as shown in \figref{fig:My3_bifur}.
+\defplot{My3_bifur}{Bifurcation of the dominant spectrum peak for three layers of Mylar.}
+
 \FloatBarrier
 Using the simulated data of 5.486~MeV alpha ion transmission in dry air, aluminum, and Mylar in TRIM, rough estimates of total stopping power $-dE/dx$, using an estimate of the derivative between adjacent measurements of energy $E$ and $x$:
 \begin{equation}\label{eq:dedx}
@@ -291,6 +297,8 @@ In \figref{fig:air_range}, we estimate a range in air substantially lower than t
 If our solid angle normalization were imperfect in a way that further decreased intensity by distance than we expected, this might result in such an underestimate in range.
 The range in Mylar (\figref{fig:AlMy_range}) was also drastically underestimated, but since these measurements were taken at the same distance, solid angle calculations would not account for this error.
 Instead, it is still possible that source location shifted more than trivially between measurements, or that wrinkles in the somewhat unwieldy Mylar sheets resulted in greater thickness than expected.
+Another explanation may be in difficulty reading the spectra of Mylar: it is possible that the bifurcation of the peak for three layers lead to a drastic underestimate of integrated intensity for this thickness of Mylar, leading to a substantial underestimate in range.
+
 In the same figure, we observe a seemingly more accurate estimation of range in aluminum, but a much more substantial error.
 This error reflects a large difference in thickness between different measurements, and suggests we did not have thin enough sheets of aluminum to precisely estimate the range of 5.486~MeV alpha particles in aluminum.\\
 
@@ -342,9 +350,14 @@ Where a detail could not be identified for a given device, it is replaced with `
     \begin{tabular}{c|cccc}
         Item & Manufacturer & Model & ID Type & ID Number\\\hline
         Module rack & Canberra (now Mirion)\sref{addr:mirion}& Model 2000 & Inventory \# & NE759377 \\
-        Geiger-Muller Detector & \na & \na & \na & \na \\
-        GM Pulse Inverter & Spectrum Techniques\sref{addr:spect} & 2017 GPI & \na & \na \\
-        % Multichannel Analyzer & Ortec\sref{addr:ortec} & EasyMCA & Inventory \# & P10F79090 \\
+        % Geiger-Muller Detector & \na & \na & \na & \na \\
+        % GM Pulse Inverter & Spectrum Techniques\sref{addr:spect} & 2017 GPI & \na & \na \\
+        Multichannel Analyzer & Ortec\sref{addr:ortec} & EasyMCA & Inventory \# & P10F79090 \\
+        Alpha Spectrometer & Ortec\sref{addr:ortec} & Model 7401, Si surface barrier detector & Property \# & NE 759377\\
+        Alpha Source & Unknown & 0.1 \micCi \AmSrc & \na & \na\\
+        Vacuum Pump & Unknown & \na & \na & \na \\
+        Mylar Sheets & Unknown & $5\times3.6$~microns thick & \na & \na \\
+        Aluminum Sheets & Unkown & $5\times18$~microns thick & \na & \na \\
         % Weak Source 1 & Spectrum Techniques\sref{addr:spect} & 1.0\micCi ~$^{137}$Cs Beta Source & Date & Sep. 2017 \\
         % Weak Source 2 & Spectrum Techniques\sref{addr:spect} & 1.0\micCi ~$^{137}$Cs Beta Source & Date & Sep. 2017 \\
         % Strong Source & Eckert and Ziegler\sref{addr:eck-zieg} & 30\micCi~$^{137}Cs$ Beta Source & Date & Sep. 2017 \\
@@ -365,26 +378,16 @@ Where a detail could not be identified for a given device, it is replaced with `
         Atlanta, GA;
         Phone: 770.432.2744;
         \url{https://ir.mirion.com/}
-        \item\label{addr:spect}
-        Spectrum Techniques:
-        106 Union Valley Rd, Oak Ridge, TN 37830;
-        Phone: 865.482.9937;
-        \url{https://www.spectrumtechniques.com/}
-        \item\label{addr:eck-zieg}
-        Eckert \& Ziegler Isotope Products:
-        24937 Avenue Tibbitts, Valencia, CA 91355;
-        Phone: +1 866 476-9767;
-        \url{https://isotopeproducts.com/}
-        \item\label{addr:caen}
-        Caen Sp.A.:
-        Via della Vetraia, 11, 55049 Viareggio LU - Italy;
-        Phone: +39 0584 388398;
-        \url{https://www.caen.it/}
-        \item\label{addr:keys}
-        Keysight Technologies: 
-        1900 Garden of the Gods Road, Colorado Springs, CO 80907-3423 United States;
-        Phone: 1 800 829-4444;
-        \url{https://www.keysight.com}
+        % \item\label{addr:spect}
+        % Spectrum Techniques:
+        % 106 Union Valley Rd, Oak Ridge, TN 37830;
+        % Phone: 865.482.9937;
+        % \url{https://www.spectrumtechniques.com/}
+        % \item\label{addr:eck-zieg}
+        % Eckert \& Ziegler Isotope Products:
+        % 24937 Avenue Tibbitts, Valencia, CA 91355;
+        % Phone: +1 866 476-9767;
+        % \url{https://isotopeproducts.com/}
         \item\label{addr:ortec}
         Advanced Measurement Technology:
         801 South Illinois Avenue,
@@ -393,6 +396,16 @@ Where a detail could not be identified for a given device, it is replaced with `
         Phone: +1.865.482.4411;
         Fax: +1.865.483.0396;
         \url{https://www.ortec-online.com};
+        \item\label{addr:caen}
+        Caen Sp.A.:
+        Via della Vetraia, 11, 55049 Viareggio LU - Italy;
+        Phone: +39 0584 388398;
+        \url{https://www.caen.it/}
+        % \item\label{addr:keys}
+        % Keysight Technologies: 
+        % 1900 Garden of the Gods Road, Colorado Springs, CO 80907-3423 United States;
+        % Phone: 1 800 829-4444;
+        % \url{https://www.keysight.com}
         Email: ortec.info@ametek.com
         \item\label{addr:dell}
         Dell Technologies:
