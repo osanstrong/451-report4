@@ -231,12 +231,12 @@ air_E = [get_peak_E(f"data/Air, {d}, TRANSMIT.txt")/1e3 for d in air_dist[:-1]] 
 
 air_dEdx = [(air_E[i] - air_E[i+1])/(air_dist[i+1]-air_dist[i]) for i in range(len(air_dist)-1)]
 air_Ed = [(air_E[i] + air_E[i+1])/2 for i in range(len(air_E)-1)]
-plt.scatter(air_Ed, air_dEdx, label="Air")
-print(air_dEdx)
-plt.xlabel("Energy (keV)")
-plt.ylabel("Stopping power -dE/dx (keV/mm)")
-plt.legend()
-plt.show()
+# plt.scatter(air_Ed, air_dEdx, label="Air")
+# print(air_dEdx)
+# plt.xlabel("Energy (keV)")
+# plt.ylabel("Stopping power -dE/dx (keV/mm)")
+# plt.legend()
+# plt.show()
 
 # al_E = al_x
 
@@ -280,13 +280,14 @@ def plot_dEdx(path, skip, mat, trans_est):
         plt.scatter(trans_est[0], trans_est[1], label=f"Total in {mat}, Transmission estimate")
     plt.xlabel("E (MeV)")
     plt.ylabel("Stopping Power -dE/dx (keV/micron)")
+    plt.loglog()
     plt.legend()
     plt.show()
 
     return E, Se, Sn, St
 
-# plot_dEdx("data/SRIM_ Helium in Aluminum", 24, "aluminum", None)
-# plot_dEdx("data/SRIM_ Helium in Mylar", 26, "Mylar", ([e/1e3 for e in my_Ed], [e for e in my_dEdx]))
+plot_dEdx("data/SRIM_ Helium in Aluminum", 24, "aluminum", None)
+plot_dEdx("data/SRIM_ Helium in Mylar", 26, "Mylar", ([e/1e3 for e in my_Ed], [e for e in my_dEdx]))
 plot_dEdx("data/SRIM_ Helium in Air, Dry (gas)", 28, "air", ([e/1e3 for e in air_Ed], [e/1e3 for e in air_dEdx]))
 
 def load_range(path, skip):
